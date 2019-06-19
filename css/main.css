@@ -1,7 +1,7 @@
 main {
     height: 450px;
     width: 450px;
-    border: 5px ;
+    border: 5px;
     margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
@@ -15,7 +15,6 @@ header {
     text-align: center;
     font-size: 30px;
     font-family: Tahoma;
-
 }
 
 .wrapper {
@@ -27,10 +26,6 @@ header {
     padding-top: 5px;
 }
 
-.hide{
-    background-color: slategray;
-    color:slategray;
-}
 .box {
     color: skyblue;
     height: 100px;
@@ -42,12 +37,36 @@ header {
     border-radius: 4px;
     cursor: pointer;
     box-shadow: 0px 5px 5px 0px rgba(153,153,153,0.5);
-
 }
+
+.hide {
+    color: slategray;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    list-style: none;
+    background-color: slategray;
+    margin: 5px 5px 5px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0px 5px 5px 0px rgba(153,153,153,0.5);
+}
+.match {
+    color: darkgrey;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    list-style: none;
+    background-color: lightgreen;
+    margin: 5px 5px 5px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0px 5px 5px 0px rgba(153,153,153,0.5);
+}
+
 p{
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 2.5em;
-
 }
