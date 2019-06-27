@@ -1,7 +1,7 @@
 const cards = ['cloud','cloud','traffic','traffic','favorite','favorite','computer','computer',
     'android','android','business','business','flag','flag','wallpaper','wallpaper'];
 
-const Wrapper =document.querySelector('.wrapper');
+const wrapper =document.querySelector('.wrapper');
 const reset = document.getElementById('reset');
 
 let arraylist = ['box','hide'];
@@ -15,6 +15,8 @@ let seconds =0;
 let clock = document.getElementById('clock');
 let rating = document.getElementById('rating');
 let star = document.getElementsByClassName('ratingstars');
+
+
 function shuffle(array) {
 
     for (let currentIndex = array.length - 1; currentIndex > 0; currentIndex--) {
@@ -29,10 +31,8 @@ function shuffle(array) {
 function starRating(){
 
     if (moveCount === 20 && star.length === 5){
-        console.log("Not a 5 star performance"+star.item(4));
         rating.removeChild(star.item(4));
     }else if (moveCount === 30 && star.length === 4){
-        console.log("Not a 4 star performance"+star.item(3));
         rating.removeChild(star.item(3));
     }
     else if(moveCount === 40 && star.length === 3){
@@ -48,13 +48,13 @@ function starRating(){
 
 setInterval(starRating, 1000);
 
-function Createcards(array){
-    console.log(Wrapper);
+function createCards(array){
+    console.log(wrapper);
     for (let i=0; i< array.length; i++){
         const box = document.createElement('li');
         box.classList.add(...arraylist);
         box.innerHTML = `<p><i class="material-icons">${array[i]}</i></p>`;
-        Wrapper.appendChild(box);
+        wrapper.appendChild(box);
     }
 }
 function createStars(){
@@ -88,58 +88,56 @@ function gameTimer(){
 setInterval(gameTimer,1000);
 
 function gameReset(){
+    //reset all counters and destroy current state
     moveCount =0;
     mc.innerHTML = `0 Moves`;
     clock.innerHTML = `00:00`;
     seconds = 0;
     lastPickedCard =null;
     openCardList=[];
-    let temp = Wrapper.getElementsByTagName('li');
+    let temp = wrapper.getElementsByTagName('li');
     for (let k of cards){
-        Wrapper.removeChild(temp.item(k));
+        wrapper.removeChild(temp.item(k));
     }
     for(let j=star.length; j>0 ; j--){
         rating.removeChild(star.item(star.length-1));
     }
-    let reShuffle = shuffle(cards);
-    Createcards(reShuffle);
+    //rebuild
+    init();
+}
+
+function init(){
+
+    let shuffleCards = shuffle(cards);
+    createCards(shuffleCards);
     createStars();
 }
 
-let shuffleCards = shuffle(cards);
-console.log(shuffleCards);
-Createcards(shuffleCards);
-createStars();
-
-function closeCard(){
-    let cards = document.querySelectorAll('li');
-}
-
 reset.addEventListener('click', gameReset);
+
 parentElement.addEventListener('click', function respondToClick(childElement){
     console.log('Item clicked'+ childElement.target.innerHTML);
     if (childElement.target.nodeName === 'LI' && lastPickedCard !== childElement.target){
         childElement.target.classList.toggle('hide');
-            if(lastPickedCard == null){
-                lastPickedCard = childElement.target;
+        if(lastPickedCard == null){
+            lastPickedCard = childElement.target;
 
-            } else if (compareCards(lastPickedCard.textContent, childElement.target.textContent)){
-                console.log ('Match found');
-                lastPickedCard.classList.add('match');
-                childElement.target.classList.add('match');
-                openCardList.push(lastPickedCard.textContent, childElement.target.textContent);
+        } else if (compareCards(lastPickedCard.textContent, childElement.target.textContent)){
+            console.log ('Match found');
+            lastPickedCard.classList.add('match');
+            childElement.target.classList.add('match');
+            openCardList.push(lastPickedCard.textContent, childElement.target.textContent);
+            lastPickedCard =null;
+        }
+        else if (!compareCards(lastPickedCard.textContent, childElement.target.textContent)){
+            setTimeout(function toggleCards() {
+                lastPickedCard.classList.toggle('hide');
+                childElement.target.classList.toggle('hide');
                 lastPickedCard =null;
-                }
-                else if (!compareCards(lastPickedCard.textContent, childElement.target.textContent)){
-                setTimeout(function toggleCards() {
-                    lastPickedCard.classList.toggle('hide');
-                    childElement.target.classList.toggle('hide');
-                    lastPickedCard =null;
-                },1000);
-            }
-            visibleCount = Math.floor(moveCount++/2);
-            mc.innerHTML = `${visibleCount} Moves`;
-
+            },500);
+        }
+        visibleCount = Math.floor(moveCount++/2);
+        mc.innerHTML = `${visibleCount} Moves`;
     }
     if(openCardList.length == 16){
 
@@ -155,8 +153,8 @@ function gameCompleted(){
              Time taken:            ${clock.innerText} Seconds
              Number of Moves:  ${visibleCount} Moves
              Memory Level:        ${star.length} Star `);
-    gameReset();
-    }, 1000);
+        gameReset();
+    }, 800);
 }
 
 function compareCards(cardA, cardB){
@@ -165,6 +163,9 @@ function compareCards(cardA, cardB){
     }
     else return false;
 }
+
+//initate sequence
+init();
 
 
 

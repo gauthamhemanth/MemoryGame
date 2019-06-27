@@ -10,7 +10,8 @@ main {
     border-radius: 4px;
     cursor: pointer;
 }
-section{
+
+section {
     width: 450px;
     margin-top: 40px;
     margin-left: auto;
@@ -21,21 +22,21 @@ section{
     align-content: center;
 }
 
-
 #rating {
     width: 150px;
     display: flex;
-
 }
 
-#clock{
+#clock {
     width: 100px;
 }
-#reset{
+
+#reset {
     width: 50px;
     cursor: pointer;
 }
-#counter{
+
+#counter {
     width: 100px;
 }
 
@@ -67,7 +68,7 @@ header {
     box-shadow: 0px 5px 5px 0px rgba(153,153,153,0.5);
 }
 
-.ratingstars{
+.ratingstars {
     list-style: none;
     padding-left: 0px;
     color: gold;
@@ -85,6 +86,7 @@ header {
     cursor: pointer;
     box-shadow: 0px 5px 5px 0px rgba(153,153,153,0.5);
 }
+
 .match {
     color: darkgrey;
     height: 100px;
@@ -98,11 +100,7 @@ header {
     box-shadow: 0px 5px 5px 0px rgba(153,153,153,0.5);
 }
 
-.stars{
-
-}
-
-p{
+p {
     display: block;
     margin-left: auto;
     margin-right: auto;
