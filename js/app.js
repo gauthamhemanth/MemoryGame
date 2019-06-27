@@ -6,14 +6,15 @@ const reset = document.getElementById('reset');
 
 let arraylist = ['box','hide'];
 let openCardList =[];
-let c;
+let visibleCount =0;
 let lastPickedCard =null;
 let moveCount =0;
 let mc = document.getElementById('counter');
-let parentElement = document.querySelector('ul');
+let parentElement = document.getElementById('parent');
 let seconds =0;
 let clock = document.getElementById('clock');
-
+let rating = document.getElementById('rating');
+let star = document.getElementsByClassName('ratingstars');
 function shuffle(array) {
 
     for (let currentIndex = array.length - 1; currentIndex > 0; currentIndex--) {
@@ -25,6 +26,28 @@ function shuffle(array) {
     return array;
 }
 
+function starRating(){
+
+    if (moveCount === 20 && star.length === 5){
+        console.log("Not a 5 star performance"+star.item(4));
+        rating.removeChild(star.item(4));
+    }else if (moveCount === 30 && star.length === 4){
+        console.log("Not a 4 star performance"+star.item(3));
+        rating.removeChild(star.item(3));
+    }
+    else if(moveCount === 40 && star.length === 3){
+        rating.removeChild(star.item(2));
+    }
+    else if(moveCount === 50 && star.length === 2){
+        rating.removeChild(star.item(1));
+    }else {
+        console.log('do nothing with the stars '+ star.length);
+        console.log('number of actual moves '+ moveCount);
+    }
+}
+
+setInterval(starRating, 1000);
+
 function Createcards(array){
     console.log(Wrapper);
     for (let i=0; i< array.length; i++){
@@ -32,6 +55,14 @@ function Createcards(array){
         box.classList.add(...arraylist);
         box.innerHTML = `<p><i class="material-icons">${array[i]}</i></p>`;
         Wrapper.appendChild(box);
+    }
+}
+function createStars(){
+    for (let i=0; i<5;i++){
+        let s = document.createElement('li');
+        s.classList.add('ratingstars');
+        s.innerHTML = `<i class="material-icons stars">star</i>`;
+        rating.appendChild(s);
     }
 }
 
@@ -62,16 +93,23 @@ function gameReset(){
     clock.innerHTML = `00:00`;
     seconds = 0;
     lastPickedCard =null;
-    let temp = document.getElementsByTagName('li');
+    openCardList=[];
+    let temp = Wrapper.getElementsByTagName('li');
     for (let k of cards){
         Wrapper.removeChild(temp.item(k));
     }
-    Createcards(shuffleCards);
+    for(let j=star.length; j>0 ; j--){
+        rating.removeChild(star.item(star.length-1));
+    }
+    let reShuffle = shuffle(cards);
+    Createcards(reShuffle);
+    createStars();
 }
 
 let shuffleCards = shuffle(cards);
 console.log(shuffleCards);
 Createcards(shuffleCards);
+createStars();
 
 function closeCard(){
     let cards = document.querySelectorAll('li');
@@ -99,8 +137,8 @@ parentElement.addEventListener('click', function respondToClick(childElement){
                     lastPickedCard =null;
                 },1000);
             }
-            c = Math.floor(moveCount++/2);
-            mc.innerHTML = `${c} Moves`;
+            visibleCount = Math.floor(moveCount++/2);
+            mc.innerHTML = `${visibleCount} Moves`;
 
     }
     if(openCardList.length == 16){
@@ -111,10 +149,12 @@ parentElement.addEventListener('click', function respondToClick(childElement){
 
 function gameCompleted(){
     setTimeout(function (){alert(
-        `            Hurray..!!!
-         you won with the below performace stats
-             Time taken:      ${clock.innerText} Seconds
-             Number of Moves:  ${c} Moves`);
+        `                      Hurray.....!!!
+         you have successfully completed the challenge 
+                   below are the performance stats
+             Time taken:            ${clock.innerText} Seconds
+             Number of Moves:  ${visibleCount} Moves
+             Memory Level:        ${star.length} Star `);
     gameReset();
     }, 1000);
 }
