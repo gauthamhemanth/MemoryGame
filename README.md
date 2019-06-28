@@ -1,5 +1,5 @@
 # Name: Memory Game
-# Version: 1.0
+** Version: 1.0 **
 
 # Description:
 A quick way to check if the player has a photographic memory.
@@ -14,7 +14,11 @@ player has to identify the pair in a sequence order. Every combination is a move
         /js/app.js
         /Index.html
 
-# System Requirements: Chrome,safari,firefox or equivalent browser
+# System Requirements: 
+Chrome,safari,firefox or equivalent browser
 
+#Contributors:
+
+Hemanth Volety <Gautham.Hemanth@gmail.com>
 
 
