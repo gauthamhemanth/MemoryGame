@@ -15,9 +15,9 @@ player has to identify the pair in a sequence order. Every combination is a move
         /Index.html
 
 # System Requirements: 
-Chrome,safari,firefox or equivalent browser
+Chrome, safari, firefox or equivalent browser
 
-#Contributors:
+# Contributors:
 
 Hemanth Volety <Gautham.Hemanth@gmail.com>
 
